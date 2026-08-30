@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Publications — Viraj Agrawal</title>
+<meta name="description" content="Publications of Viraj Agrawal, including 'Retrieval Needs Multivectors: An Exponential Separation' and the ANDOR benchmark.">
+<link rel="canonical" href="https://virajagr.github.io/publications.html">
+<meta name="theme-color" content="#fdfdfc" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14161a" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="assets/styles.css">
+<script>
+  // Applied before first paint: saved theme, else the OS preference. Entrance
+  // animations run only on the first page of a browsing session.
+  try {
+    document.documentElement.dataset.theme = localStorage.getItem('theme') ||
+      (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    if (!sessionStorage.getItem('entered')) {
+      sessionStorage.setItem('entered', '1');
+      document.documentElement.dataset.entrance = '';
+    }
+  } catch (e) {}
+</script>
+</head>
+
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="layout">
+
+<aside class="sidebar">
+  <a class="sidebar__home" href="index.html">
+    <img class="portrait" src="assets/portrait-square.jpg" alt="" width="360" height="360">
+    <span class="sitename">Viraj Agrawal</span>
+  </a>
+  <nav class="sidenav" aria-label="Sections">
+    <a href="index.html">About</a>
+    <a href="publications.html" aria-current="page">Publications</a>
+    <a href="competitive-programming.html">Competitive Programming</a>
+  </nav>
+</aside>
+<script src="assets/main.js"></script>
+
+<div class="content">
+<main id="main">
+
+  <h1>Publications</h1>
+
+  <h2>Preprints</h2>
+  <ul class="pubs">
+    <li>
+      <span class="pub-title"><a href="https://arxiv.org/abs/2608.21494" target="_blank" rel="noopener noreferrer">Retrieval Needs Multivectors: An Exponential Separation</a></span><br>
+      <span class="authors">Mihir Agarwal, <strong>Viraj Agrawal</strong>, Sabyasachi Basu, Ankit Garg, Kirankumar Shiragur.</span><br>
+      <span class="venue">arXiv:2608.21494, August 2026.</span>
+      <span class="pub-links">[<a href="https://arxiv.org/pdf/2608.21494" target="_blank" rel="noopener noreferrer">pdf</a>]
+        [<a href="https://arxiv.org/bibtex/2608.21494" target="_blank" rel="noopener noreferrer">bibtex</a>]</span>
+      <details class="pub-abstract">
+        <summary>Summary</summary>
+        <p class="summary">
+          Multi-vector embeddings consistently outperform single-vector ones in retrieval, but the
+          representational gap between them was poorly understood. Following
+          <a href="https://arxiv.org/abs/2606.23475" target="_blank" rel="noopener noreferrer">Jayaram's work</a>,
+          we give the first explicit family of query and document sets, together with their relevance
+          matrices, for which single-vector embeddings that rank all relevant documents above
+          irrelevant ones require exponential size, whereas polynomial-size multi-vector embeddings
+          suffice. This establishes an exponential separation in expressive power for the task of
+          ranking documents.
+          Motivated by the construction, we introduce ANDOR, a benchmark that naturally instantiates
+          these hard examples: state-of-the-art single-vector models perform poorly zero-shot and
+          improve only marginally with fine-tuning, while multi-vector models consistently do better
+          and improve substantially with fine-tuning, closely matching our theoretical predictions.
+        </p>
+      </details>
+    </li>
+  </ul>
+
+</main>
+
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,402 @@
+/* ==========================================================================
+   Viraj Agrawal — personal site
+   ========================================================================== */
+
+/* --- Tokens --------------------------------------------------------------- */
+:root {
+  color-scheme: light;
+
+  --serif: Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, "Times New Roman", serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --measure: 43rem;
+
+  --bg: #fdfdfc;
+  --bg-2: #f2f6f5;
+  --surface: #ffffff;
+  --ink: #1b1b1b;
+  --ink-soft: #3d3d3d;
+  --ink-faint: #626262;
+  --rule: #dfe1e0;
+  --accent: #10635f;
+  --accent-2: #1d7f78;
+  --accent-soft: #e5efee;
+  --shadow: 0 6px 20px rgba(16, 99, 95, .10);
+
+  --ease: cubic-bezier(.22, .61, .36, 1);
+}
+
+/* The OS color-scheme preference is applied as the default (with the toggle as
+   the override) by the inline script in each page's head, before first paint. */
+html[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #14161a;
+  --bg-2: #171d1e;
+  --surface: #1a1d21;
+  --ink: #e7e6e3;
+  --ink-soft: #c3c2bf;
+  --ink-faint: #9a9a99;
+  --rule: #32363b;
+  --accent: #62c4bb;
+  --accent-2: #8ad8d0;
+  --accent-soft: #17302e;
+  --shadow: 0 6px 22px rgba(0, 0, 0, .45);
+}
+
+/* --- Base ----------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+/* Reserve the scrollbar gutter always, so short pages and long pages lay out
+   at the same width instead of shifting by the scrollbar's width. */
+html { scroll-behavior: smooth; scrollbar-gutter: stable; }
+
+/* Transitions are suspended while the theme swaps, otherwise properties that read
+   a custom property keep their old value instead of picking up the new token. */
+html.theme-switching, html.theme-switching *, html.theme-switching *::before, html.theme-switching *::after {
+  transition: none !important;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  /* Charter has lining figures, but the Windows fallbacks (Sitka, Georgia) default to
+     old-style ones, which makes years like 2024 ride up and down the baseline. */
+  font-variant-numeric: lining-nums;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* The page wash lives on a fixed pseudo-element rather than a fixed background
+   attachment: iOS Safari ignores background-attachment: fixed, and a fixed layer
+   scrolls without repainting the gradients. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(60rem 40rem at 12% -10%, var(--accent-soft), transparent 60%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+}
+
+::selection { background: var(--accent-soft); color: var(--ink); }
+
+p { margin: 0 0 1rem; }
+
+/* Underline grows out from the left instead of snapping on. */
+a {
+  color: var(--accent);
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: 0 calc(100% - 1px);
+  transition: background-size .28s var(--ease), color .2s var(--ease);
+}
+a:hover { background-size: 100% 1px; color: var(--accent-2); }
+
+h1 {
+  font-size: 2rem; font-weight: 600; line-height: 1.15;
+  letter-spacing: -0.01em; margin: 0 0 .6rem;
+}
+h1::after {
+  content: ""; display: block;
+  width: 2.75rem; height: 2px; margin-top: .65rem;
+  background: linear-gradient(90deg, var(--accent), transparent);
+}
+
+h2 {
+  font-family: var(--sans);
+  font-size: .95rem; font-weight: 600;
+  font-variant: small-caps; letter-spacing: .06em;
+  color: var(--accent);
+  margin: 2.75rem 0 .9rem;
+  padding-bottom: .3rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+h3 {
+  font-family: var(--sans); font-size: .9rem; font-weight: 650;
+  color: var(--ink); margin: 1.6rem 0 .5rem;
+}
+
+ul { padding-left: 1.15rem; margin: 0 0 1rem; }
+li { margin-bottom: .3rem; }
+
+.muted { color: var(--ink-faint); }
+
+.skip-link { position: absolute; left: -999px; top: 0; background: var(--bg); padding: .5rem 1rem; }
+.skip-link:focus { left: 0; }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* --- Layout --------------------------------------------------------------- */
+/* Sidebar track is sized to its widest item, "Competitive Programming", measured at the
+   bolder weight the current-page link uses — at 11.5rem it overflowed by 0.35px and wrapped. */
+.layout {
+  --side: 12.5rem;
+  display: grid;
+  grid-template-columns: var(--side) minmax(0, 1fr);
+  gap: 2.5rem;
+  max-width: calc(var(--side) + 2.5rem + var(--measure) + 3rem);
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem 3rem;
+  align-items: start;
+}
+
+.content { min-width: 0; }
+
+/* Keep prose at a readable line length even when the layout goes full-bleed. */
+main { max-width: var(--measure); }
+
+/* --- Sidebar -------------------------------------------------------------- */
+.sidebar { position: sticky; top: 3.5rem; }
+
+/* Portrait and site name share one home link, so keyboard users get a single
+   tab stop whose accessible name is the visible name. */
+.sidebar__home { display: block; margin-bottom: 1.1rem; background-image: none; color: var(--ink); }
+.sidebar__home:hover { color: var(--accent); }
+.portrait {
+  width: 100%; max-width: 145px; height: auto;
+  border: 1px solid var(--rule); border-radius: 50%; display: block;
+  transition: transform .3s var(--ease), box-shadow .3s var(--ease);
+}
+.sidebar__home:hover .portrait { transform: translateY(-3px); box-shadow: var(--shadow); }
+
+.sitename { display: block; font-size: 1.1rem; font-weight: 600; line-height: 1.25; margin-top: .85rem; }
+
+.sidenav { font-family: var(--sans); font-size: .92rem; }
+.sidenav a {
+  display: block; padding: .3rem 0; position: relative;
+  background-image: none;
+  transition: color .2s var(--ease), transform .2s var(--ease);
+}
+.sidenav a:hover { transform: translateX(3px); }
+.sidenav a[aria-current="page"] { color: var(--ink); font-weight: 650; }
+.sidenav a[aria-current="page"]::before {
+  content: ""; position: absolute; left: -.85rem;
+  top: .32rem; bottom: .32rem;
+  width: 3px; border-radius: 2px;
+  background: linear-gradient(var(--accent), var(--accent-2));
+}
+
+/* --- Identity block, About page ------------------------------------------- */
+.affil { color: var(--ink-soft); line-height: 1.45; margin-bottom: .5rem; }
+.contact, .profiles { font-family: var(--sans); font-size: .9rem; margin-bottom: .3rem; }
+.contact { color: var(--ink-soft); }
+.profiles { color: var(--ink-faint); margin-bottom: 1.9rem; }
+
+/* --- Publications --------------------------------------------------------- */
+.pubs { list-style: none; padding: 0; margin: 0; }
+.pubs > li {
+  margin: 0 0 1.6rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--rule);
+  transition: border-color .25s var(--ease);
+}
+.pubs > li:hover { border-left-color: var(--accent); }
+.pubs > li:last-child { margin-bottom: 0; }
+
+.pub-title { font-weight: 600; }
+.authors { color: var(--ink-soft); }
+.venue { color: var(--ink-faint); }
+.pub-links { font-family: var(--sans); font-size: .85rem; color: var(--ink-faint); }
+.summary { color: var(--ink-soft); font-size: .96rem; margin: .7rem 0 0; }
+
+/* --- Role entries (experience) -------------------------------------------- */
+.role {
+  margin-bottom: 2.25rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--rule);
+  transition: border-color .25s var(--ease);
+}
+.role:hover { border-left-color: var(--accent); }
+.role:last-child { margin-bottom: 0; }
+.role h2 { margin-top: 0; }
+.role + .role h2 { margin-top: 2.5rem; }
+.when {
+  font-family: var(--sans); font-size: .85rem; color: var(--ink-faint);
+  margin-bottom: .7rem;
+}
+
+/* --- Earlier (dated affiliations) ----------------------------------------- */
+.earlier { list-style: none; padding: 0; margin: 0; }
+.earlier li { margin-bottom: .4rem; color: var(--ink-soft); }
+.earlier .yr {
+  color: var(--ink-faint);
+  font-variant-numeric: lining-nums tabular-nums;
+  margin-right: .5rem;
+}
+
+/* --- Theme toggle --------------------------------------------------------- */
+.theme-toggle {
+  position: fixed;
+  top: clamp(1rem, 2.4vw, 1.6rem);
+  right: clamp(1rem, 2.4vw, 1.6rem);
+  z-index: 20;
+  display: grid; place-items: center;
+  width: 2.3rem; height: 2.3rem;
+  padding: 0;
+  color: var(--ink-faint);
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: color .2s var(--ease), border-color .2s var(--ease),
+              transform .2s var(--ease), box-shadow .2s var(--ease);
+}
+.theme-toggle:hover {
+  color: var(--accent); border-color: var(--accent);
+  transform: rotate(-12deg); box-shadow: var(--shadow);
+}
+.theme-toggle .icon { display: block; }
+.theme-toggle .icon-sun { display: none; }
+html[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+html[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+
+/* --- Publication summary disclosure ---------------------------------------- */
+/* Inline variant for a single publication entry: no rules, no full-width hit area.
+   Animation is scoped to [open] and has no fill mode on purpose: inside a closed
+   <details> the content is content-visibility:hidden, where animations never advance,
+   and a `both` fill would pin the body at the opening keyframe (opacity 0). */
+.pub-abstract { margin-top: .45rem; }
+.pub-abstract > summary {
+  cursor: pointer; list-style: none; user-select: none;
+  display: inline-flex; align-items: center; gap: .4rem;
+  font-family: var(--sans); font-size: .8rem; letter-spacing: .02em;
+  color: var(--ink-faint);
+  background-image: none;
+  transition: color .2s var(--ease);
+}
+.pub-abstract > summary::-webkit-details-marker { display: none; }
+.pub-abstract > summary:hover { color: var(--accent); }
+.pub-abstract > summary::after {
+  content: ""; flex: 0 0 auto;
+  width: 5px; height: 5px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-1px) rotate(-45deg);
+  transition: transform .22s var(--ease);
+  opacity: .75;
+}
+.pub-abstract[open] > summary::after { transform: translateY(-2px) rotate(45deg); }
+.pub-abstract[open] .summary { animation: disclosure-in .24s ease; }
+/* When the print handler opens the details, the open-animation must not start:
+   the print snapshot would freeze its first keyframe (opacity 0). This has to be
+   a screen-media rule — print media sees the beforeprint-time animation state. */
+html.printing .pub-abstract[open] .summary { animation: none; }
+
+/* Numbered markers: the link is the evidence, the label carries no claim. */
+.marks { font-family: var(--sans); font-size: .88rem; color: var(--ink-soft); margin-bottom: .5rem; }
+.marks__role { display: inline-block; min-width: 6.2rem; color: var(--ink-faint); }
+.marks a {
+  display: inline-block;
+  min-width: 1.35rem;
+  margin: 0 .1rem;
+  padding: .05rem .3rem;
+  text-align: center;
+  font-size: .8rem;
+  color: var(--ink-faint);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background-image: none;
+  transition: color .18s var(--ease), border-color .18s var(--ease);
+}
+.marks a:hover { color: var(--accent); border-color: var(--accent); }
+.marks__sep { margin: 0 .45rem; color: var(--ink-faint); }
+
+@keyframes disclosure-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* --- Entrance ------------------------------------------------------------- */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Entrances run only on the first page of a session (html[data-entrance] is set
+   by the inline head script), so internal navigation doesn't replay them. */
+html[data-entrance] .sidebar { animation: fade-in .5s var(--ease) both; }
+html[data-entrance] main { animation: rise .55s var(--ease) .06s both; }
+
+/* --- Responsive ----------------------------------------------------------- */
+/* Narrow the side panel before giving up on it. */
+@media (max-width: 900px) {
+  .layout { --side: 11.5rem; gap: 2rem; padding-top: 3rem; }
+  .sidebar { top: 3rem; } /* match the reduced layout padding, or it sits 8px low */
+  .portrait { max-width: 118px; }
+  .sidenav { font-size: .88rem; }
+}
+
+@media (max-width: 660px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 1.6rem;
+    padding-top: 4rem;
+  }
+  /* Anchored to the page, not the viewport: a fixed button would sweep the full-width
+     text column, and reserving space for it costs too much on a narrow screen. */
+  .theme-toggle { position: absolute; width: 2rem; height: 2rem; top: 1rem; right: 1.1rem; }
+  .sidebar {
+    position: static;
+    display: flex; align-items: center; flex-wrap: wrap;
+    gap: 1.25rem;
+  }
+  .sidebar__home { margin-bottom: 0; display: flex; align-items: center; gap: 1.25rem; }
+  .sitename { margin-top: 0; }
+  .portrait { max-width: 88px; }
+  .sidenav a { display: inline-block; margin-right: 1.1rem; padding: .2rem 0; }
+  /* The vertical marker would hang into the page padding once links flow inline. */
+  .sidenav a[aria-current="page"] { border-bottom: 2px solid var(--accent); }
+  .sidenav a[aria-current="page"]::before { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  html[data-entrance] main, html[data-entrance] .sidebar { animation: none; }
+  .pub-abstract[open] .summary { animation: none; }
+  .theme-toggle:hover { transform: none; }
+  .sidenav a:hover { transform: none; }
+  .sidebar__home:hover .portrait { transform: none; }
+  *, *::before, *::after { transition-duration: .01ms !important; }
+}
+
+@media print {
+  .skip-link, .sidenav, .theme-toggle { display: none; }
+  .layout { display: block; max-width: none; }
+  body { color: #000; background: #fff; }
+  body::before { display: none; }
+  a { color: #000; }
+
+  /* Printing while the dark theme is active would otherwise put pale dark-theme
+     grays on white paper; force the light ink tokens back. */
+  html[data-theme="dark"] {
+    --ink: #000;
+    --ink-soft: #3d3d3d;
+    --ink-faint: #626262;
+    --rule: #dfe1e0;
+    --accent: #10635f;
+  }
+
+  /* On paper the links are the evidence, so print their destinations. */
+  .marks a[href]::after,
+  .pub-links a[href]::after { content: " (" attr(href) ")"; font-size: .7em; }
+
+  /* Print snapshots freeze running animations at their current keyframe; the
+     entrance animations start at opacity 0 and would print the page blank. */
+  html[data-entrance] main,
+  html[data-entrance] .sidebar,
+  .pub-abstract[open] .summary { animation: none; }
+}
