@@ -88,6 +88,10 @@ body::before {
 
 p { margin: 0 0 1rem; }
 
+/* Android draws a filled rectangle over the tapped element, which looks wrong on
+   a circular button and on the bordered markers. */
+a, button, summary { -webkit-tap-highlight-color: transparent; }
+
 /* Underline grows out from the left instead of snapping on. */
 a {
   color: var(--accent);
@@ -171,7 +175,6 @@ main { max-width: var(--measure); }
   transition: transform .3s var(--ease), box-shadow .3s var(--ease);
 }
 .portrait-link:hover .portrait { transform: translateY(-3px); box-shadow: var(--shadow); }
-
 .sitename {
   display: block; margin-top: .85rem;
   font-size: 1.1rem; font-weight: 600; line-height: 1.25;
@@ -289,9 +292,13 @@ main { max-width: var(--measure); }
   transition: color .2s var(--ease), border-color .2s var(--ease),
               transform .2s var(--ease), box-shadow .2s var(--ease);
 }
-.theme-toggle:hover {
-  color: var(--accent); border-color: var(--accent);
-  transform: rotate(-12deg); box-shadow: var(--shadow);
+/* Transform-based hovers are gated to real pointers: on a touchscreen they latch
+   after a tap and leave the control sitting there rotated or lifted. */
+@media (hover: hover) and (pointer: fine) {
+  .theme-toggle:hover {
+    color: var(--accent); border-color: var(--accent);
+    transform: rotate(-12deg); box-shadow: var(--shadow);
+  }
 }
 .theme-toggle .icon { display: block; }
 .theme-toggle .icon-sun { display: none; }
@@ -332,8 +339,8 @@ html.printing .pub-abstract[open] .summary { animation: none; }
 
 /* Numbered markers: the link is the evidence, the label carries no claim. */
 .marks { font-family: var(--sans); font-size: .88rem; color: var(--ink-soft); margin-bottom: .5rem; }
-.marks__role { display: inline-block; min-width: 6.2rem; color: var(--ink-faint); }
-.marks a {
+.marks__role { display: inline-block; min-width: 6.2rem; color: var(--ink-faint); }.marks__group { display: inline; }
+.marks__site { color: var(--ink-soft); }.marks a {
   display: inline-block;
   min-width: 1.35rem;
   margin: 0 .1rem;
@@ -409,6 +416,17 @@ html[data-entrance] main { animation: rise .55s var(--ease) .06s both; }
   .sidenav { font-size: .82rem; }
   .sidenav a { display: inline-block; margin-right: .8rem; padding: .4rem 0; }
   .marks a { min-width: 1.75rem; padding: .3rem .45rem; }
+  /* Inline flow splits a platform's tiles across lines and strands them from their
+     label, so each platform becomes its own row. */
+  .marks--grouped { display: grid; gap: .3rem; }
+  .marks--grouped .marks__role { min-width: 0; }
+  .marks--grouped .marks__group {
+    display: flex; flex-wrap: wrap; align-items: center;
+    gap: .3rem; padding-left: .2rem;
+  }
+  .marks--grouped .marks__site { min-width: 5.2rem; color: var(--ink-faint); }
+  .marks--grouped .marks__sep { display: none; }
+  .marks--grouped a { margin: 0; }
   .pub-abstract > summary { padding: .3rem 0; }
   .pub-links a { display: inline-block; padding: .25rem .15rem; }
   /* The vertical marker would hang into the page padding once links flow inline.
