@@ -49,10 +49,35 @@
 
   // Drop the portrait instead of showing a broken image when no photo is present.
   var img = document.querySelector('.sidebar .portrait');
+  var portraitLink = document.querySelector('.portrait-link');
   if (img) {
-    var hide = function () { img.remove(); };
+    var hide = function () { (portraitLink || img).remove(); };
     img.addEventListener('error', hide);
     if (img.complete && img.naturalWidth === 0) hide();
+  }
+
+  // Without JS the portrait link just opens the image file; with it, a modal view.
+  if (portraitLink && typeof HTMLDialogElement === 'function') {
+    var dlg = document.createElement('dialog');
+    dlg.className = 'lightbox';
+    var big = document.createElement('img');
+    big.src = portraitLink.getAttribute('href');
+    big.alt = 'Viraj Agrawal';
+    dlg.appendChild(big);
+    document.body.appendChild(dlg);
+
+    portraitLink.addEventListener('click', function (e) {
+      // Let ctrl/cmd/shift/middle clicks fall through to the normal link behaviour.
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+      e.preventDefault();
+      dlg.showModal();
+    });
+    dlg.addEventListener('click', function () { dlg.close(); });
+    // Esc-to-close is native <dialog> behaviour, but handle it explicitly so the
+    // modal can always be dismissed from the keyboard.
+    dlg.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' || e.key === 'Esc') { e.preventDefault(); dlg.close(); }
+    });
   }
 
   // Closed <details> don't print their contents; open them for printing and

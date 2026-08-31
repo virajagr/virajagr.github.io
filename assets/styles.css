@@ -159,16 +159,44 @@ main { max-width: var(--measure); }
 
 /* Portrait and site name share one home link, so keyboard users get a single
    tab stop whose accessible name is the visible name. */
-.sidebar__home { display: block; margin-bottom: 1.1rem; background-image: none; color: var(--ink); }
-.sidebar__home:hover { color: var(--accent); }
+/* Portrait and name are separate links: the portrait opens a larger view, the name goes home. */
+.sidebar__head { margin-bottom: 1.1rem; }
+.portrait-link { display: block; background-image: none; }
 .portrait {
   width: 100%; max-width: 145px; height: auto;
   border: 1px solid var(--rule); border-radius: 50%; display: block;
+  cursor: zoom-in;
   transition: transform .3s var(--ease), box-shadow .3s var(--ease);
 }
-.sidebar__home:hover .portrait { transform: translateY(-3px); box-shadow: var(--shadow); }
+.portrait-link:hover .portrait { transform: translateY(-3px); box-shadow: var(--shadow); }
 
-.sitename { display: block; font-size: 1.1rem; font-weight: 600; line-height: 1.25; margin-top: .85rem; }
+.sitename {
+  display: block; margin-top: .85rem;
+  font-size: 1.1rem; font-weight: 600; line-height: 1.25;
+  color: var(--ink); background-image: none;
+}
+.sitename:hover { color: var(--accent); }
+
+/* Native <dialog> gives focus trapping, inert background and Esc-to-close for free. */
+.lightbox {
+  border: 0; padding: 0; background: transparent;
+  /* Never exceed the file's intrinsic 360px, or the upscale goes soft. */
+  width: min(92vw, 360px);
+  max-height: 92vh;
+  overflow: visible;
+}
+.lightbox::backdrop { background: rgba(8, 10, 12, .74); }
+.lightbox img {
+  display: block; width: 100%; height: auto;
+  border-radius: 8px;
+  cursor: zoom-out;
+}
+html[data-entrance] .lightbox[open], .lightbox[open] { animation: lightbox-in .2s var(--ease); }
+
+@keyframes lightbox-in {
+  from { opacity: 0; transform: scale(.96); }
+  to { opacity: 1; transform: none; }
+}
 
 .sidenav { font-family: var(--sans); font-size: .92rem; }
 .sidenav a {
@@ -341,6 +369,9 @@ html[data-entrance] main { animation: rise .55s var(--ease) .06s both; }
 }
 
 @media (max-width: 660px) {
+  /* Phones use overlay scrollbars, so the reserved gutter is dead space that
+     also pushes the layout visibly off-centre on a narrow screen. */
+  html { scrollbar-gutter: auto; }
   .layout {
     grid-template-columns: 1fr;
     gap: 1.6rem;
@@ -348,16 +379,21 @@ html[data-entrance] main { animation: rise .55s var(--ease) .06s both; }
   }
   /* Anchored to the page, not the viewport: a fixed button would sweep the full-width
      text column, and reserving space for it costs too much on a narrow screen. */
-  .theme-toggle { position: absolute; width: 2rem; height: 2rem; top: 1rem; right: 1.1rem; }
+  .theme-toggle { position: absolute; width: 2.75rem; height: 2.75rem; top: .8rem; right: .9rem; }
   .sidebar {
     position: static;
     display: flex; align-items: center; flex-wrap: wrap;
     gap: 1.25rem;
   }
-  .sidebar__home { margin-bottom: 0; display: flex; align-items: center; gap: 1.25rem; }
+  .sidebar__head { margin-bottom: 0; display: flex; align-items: center; gap: 1.25rem; }
   .sitename { margin-top: 0; }
   .portrait { max-width: 88px; }
-  .sidenav a { display: inline-block; margin-right: 1.1rem; padding: .2rem 0; }
+  /* Touch targets: 44px tall nav rows, and markers lifted over the 24x24 minimum. */
+  .sidenav a { display: inline-block; margin-right: 1.1rem; padding: .55rem 0; }
+  .marks a { min-width: 1.75rem; padding: .3rem .45rem; }
+  .pub-abstract > summary { padding: .3rem 0; }
+  .sitename { padding: .15rem 0; }
+  .pub-links a { display: inline-block; padding: .25rem .15rem; }
   /* The vertical marker would hang into the page padding once links flow inline. */
   .sidenav a[aria-current="page"] { border-bottom: 2px solid var(--accent); }
   .sidenav a[aria-current="page"]::before { display: none; }
@@ -369,13 +405,13 @@ html[data-entrance] main { animation: rise .55s var(--ease) .06s both; }
   .pub-abstract[open] .summary { animation: none; }
   .theme-toggle:hover { transform: none; }
   .sidenav a:hover { transform: none; }
-  .sidebar__home:hover .portrait { transform: none; }
+  .portrait-link:hover .portrait { transform: none; }
+  .lightbox[open] { animation: none; }
   *, *::before, *::after { transition-duration: .01ms !important; }
 }
 
 @media print {
-  .skip-link, .sidenav, .theme-toggle { display: none; }
-  .layout { display: block; max-width: none; }
+  .skip-link, .sidenav, .theme-toggle { display: none; }  .layout { display: block; max-width: none; }
   body { color: #000; background: #fff; }
   body::before { display: none; }
   a { color: #000; }
