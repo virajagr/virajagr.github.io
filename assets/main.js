@@ -72,7 +72,10 @@
       e.preventDefault();
       dlg.showModal();
     });
-    dlg.addEventListener('click', function () { dlg.close(); });
+    // Dismiss on clicks that land beside the photo, not on the photo itself.
+    dlg.addEventListener('click', function (e) {
+      if (e.target === dlg) dlg.close();
+    });
     // Esc-to-close is native <dialog> behaviour, but handle it explicitly so the
     // modal can always be dismissed from the keyboard.
     dlg.addEventListener('keydown', function (e) {
