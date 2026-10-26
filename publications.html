@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Publications — Viraj Agrawal</title>
-<meta name="description" content="Publications of Viraj Agrawal, including 'Retrieval Needs Multivectors: An Exponential Separation' and the ANDOR benchmark.">
+<meta name="description" content="Publications of Viraj Agrawal, including 'Simple Linear Corrections for Compression in Late Interaction' and 'Retrieval Needs Multivectors: An Exponential Separation'.">
 <link rel="canonical" href="https://virajagr.github.io/publications.html">
 <meta name="theme-color" content="#fdfdfc" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#14161a" media="(prefers-color-scheme: dark)">
@@ -50,6 +50,28 @@
 
   <h2>Preprints</h2>
   <ul class="pubs">
+    <li>
+      <span class="pub-title"><a href="https://arxiv.org/abs/2610.14196" target="_blank" rel="noopener noreferrer">Simple Linear Corrections for Compression in Late Interaction</a></span><br>
+      <span class="authors">Mihir Agarwal, Sabyasachi Basu, <strong>Viraj Agrawal</strong>.</span><br>
+      <span class="venue">arXiv:2610.14196, October 2026.</span>
+      <span class="pub-links">[<a href="https://arxiv.org/pdf/2610.14196" target="_blank" rel="noopener noreferrer">pdf</a>]
+        [<a href="https://arxiv.org/bibtex/2610.14196" target="_blank" rel="noopener noreferrer">bibtex</a>]</span>
+      <details class="pub-abstract">
+        <summary>Summary</summary>
+        <p class="summary">
+          Late-interaction (multi-vector) models store a vector per token, which makes their indices
+          expensive, and the pooling and pruning methods used to compress them lose noticeable quality
+          when compression is aggressive. We ask whether a lightweight change to the scoring function
+          can recover that quality. For each encoder, compressor and vector budget we learn a single
+          global linear correction by distilling the uncompressed model's score distributions over
+          candidate documents; the encoder and compressor stay frozen, and the correction can be
+          applied per query at search time or once, offline, to the stored vectors.
+          Across ColBERTv2 and Jina v4 on MS MARCO and BEIR, and ColPali2 on ViDoRe v3, the in-domain
+          correction improves over baseline compression in 154 of 160 BEIR settings, while transfer
+          from MS MARCO is more variable.
+        </p>
+      </details>
+    </li>
     <li>
       <span class="pub-title"><a href="https://arxiv.org/abs/2608.21494" target="_blank" rel="noopener noreferrer">Retrieval Needs Multivectors: An Exponential Separation</a></span><br>
       <span class="authors">Mihir Agarwal, <strong>Viraj Agrawal</strong>, Sabyasachi Basu, Ankit Garg, Kirankumar Shiragur.</span><br>

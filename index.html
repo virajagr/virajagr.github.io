@@ -62,7 +62,10 @@
     Microsoft Research India<br>
     Bengaluru, India
   </p>
-  <p class="contact">virajagr [at] gmail [dot] com</p>
+  <p class="contact">
+    virajagr [at] gmail [dot] com<br>
+    t-viragrawal [at] microsoft [dot] com
+  </p>
   <p class="profiles">
     <a href="https://scholar.google.com/citations?user=x7lm-7UAAAAJ&amp;hl=en" target="_blank" rel="noopener noreferrer">Google Scholar</a> &middot;
     <a href="https://orcid.org/0009-0002-1437-0427" target="_blank" rel="noopener noreferrer">ORCID</a> &middot;
@@ -72,37 +75,42 @@
   <p>
     I am a Research Fellow at
     <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-india/" target="_blank" rel="noopener noreferrer">Microsoft Research India</a>,
-    where I work with
-    <a href="https://sites.google.com/view/kiran-shiragur" target="_blank" rel="noopener noreferrer">Kirankumar Shiragur</a>
-    and <a href="https://ankit-garg-6.github.io/" target="_blank" rel="noopener noreferrer">Ankit Garg</a>.
-    I am interested in the algorithmic foundations of retrieval: what a vector representation can
-    and cannot encode, and how to search over such representations at scale. We built a family of
-    retrieval tasks where ranking the relevant documents above the irrelevant ones requires
-    exponentially large single-vector embeddings, while polynomial-size multi-vector embeddings
-    suffice, and turned the construction into a benchmark,
+    where I work on algorithms for retrieval: how to search large collections of vectors
+    efficiently, and what vector representations can and cannot express.
+  </p>
+
+  <p>
+    Much of my work is on graph-based nearest neighbor search, the approach behind DiskANN. With
+    <a href="https://sites.google.com/view/kiran-shiragur" target="_blank" rel="noopener noreferrer">Kirankumar Shiragur</a>,
+    I proved approximation guarantees for adaptive beam search on &alpha;-reachable graphs. We then
+    used the analysis to design a learned beam-width predictor that reduces query latency at the
+    same recall (under review). With
+    <a href="https://rakri.github.io/" target="_blank" rel="noopener noreferrer">Ravishankar Krishnaswamy</a>
+    and <a href="https://magdalendobson.github.io/" target="_blank" rel="noopener noreferrer">Magdalen Dobson Manohar</a>,
+    I am now working on improving search in Filtered-DiskANN, where each query carries attribute
+    filters alongside its vector.
+  </p>
+
+  <p>
+    I have also worked on multi-vector retrieval with Kirankumar Shiragur and
+    <a href="https://ankit-garg-6.github.io/" target="_blank" rel="noopener noreferrer">Ankit Garg</a>.
+    We built a family of retrieval tasks where ranking the relevant documents above the irrelevant
+    ones requires exponentially large single-vector embeddings, while polynomial-size multi-vector
+    embeddings suffice, and turned the construction into a benchmark,
     <a href="https://arxiv.org/abs/2608.21494" target="_blank" rel="noopener noreferrer">ANDOR</a>.
   </p>
 
   <p>
-    I also work with
-    <a href="https://rakri.github.io/" target="_blank" rel="noopener noreferrer">Ravishankar Krishnaswamy</a>
-    and <a href="https://magdalendobson.github.io/" target="_blank" rel="noopener noreferrer">Magdalen Dobson Manohar</a>
-    on approximate nearest neighbor search where a query carries attribute filters alongside its
-    vector, extending the DiskANN line of work.
+    Before joining Microsoft Research, I was a quantitative researcher at
+    <a href="https://www.quantboxresearch.com/" target="_blank" rel="noopener noreferrer">Quantbox Research</a>
+    for a year, looking for short-horizon predictive signals in Indian equity and index-options
+    markets. <a href="competitive-programming.html">Competitive programming</a> was a serious hobby
+    for about four years: I represented IIT Delhi at the ICPC Asia West Finals 2024, and eventually
+    spent as much time setting and testing problems as solving them.
   </p>
 
   <p>
-    Before Microsoft Research, I spent a year as a quantitative researcher at
-    <a href="https://www.quantboxresearch.com/" target="_blank" rel="noopener noreferrer">Quantbox Research</a>,
-    looking for short-horizon predictive signals in Indian equity and index-options markets.
-    Throughout, <a href="competitive-programming.html">competitive programming</a>
-    has been a long-standing habit: I competed for about four years, represented IIT Delhi at
-    the ICPC Asia West Finals 2024, and eventually spent as much time setting and testing
-    problems as solving them.
-  </p>
-
-  <p>
-    I will be applying to PhD programs and am also open to research roles in industry and academia.
+    I am open to PhD positions and research roles in industry and academia.
   </p>
 
   <h2>Earlier</h2>
@@ -114,8 +122,7 @@
       <a href="https://www.uber.com/" target="_blank" rel="noopener noreferrer">Uber</a>
     </li>
     <li><span class="yr">2020&ndash;2024</span> B.Tech.,
-      <a href="https://home.iitd.ac.in/" target="_blank" rel="noopener noreferrer">IIT Delhi</a>.
-      Mechanical Engineering, minor in Computer Science.
+      <a href="https://home.iitd.ac.in/" target="_blank" rel="noopener noreferrer">IIT Delhi</a>
     </li>
   </ul>
 
