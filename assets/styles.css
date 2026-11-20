@@ -451,6 +451,9 @@ html[data-entrance] main { animation: rise .55s var(--ease) .06s both; }
   .contests > summary { padding: .4rem 0; }
   .contests__list a { padding: .3rem 0; }
   .pub-abstract > summary { padding: .3rem 0; }
+  /* Inline-block links are line-break opportunities, which can strand a bracket
+     at the end of a line; keep "[pdf] [bibtex]" together instead. */
+  .pub-links { white-space: nowrap; }
   .pub-links a { display: inline-block; padding: .25rem .15rem; }
   /* The vertical marker would hang into the page padding once links flow inline.
      The bolder weight is dropped too: it widens the row enough to wrap the nav

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Publications — Viraj Agrawal</title>
-<meta name="description" content="Publications of Viraj Agrawal, including 'Simple Linear Corrections for Compression in Late Interaction' and 'Retrieval Needs Multivectors: An Exponential Separation'.">
+<meta name="description" content="Publications of Viraj Agrawal, including 'Variants of Beam Search for DiskANN', 'Simple Linear Corrections for Compression in Late Interaction' and 'Retrieval Needs Multivectors: An Exponential Separation'.">
 <link rel="canonical" href="https://virajagr.github.io/publications.html">
 <meta name="theme-color" content="#fdfdfc" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#14161a" media="(prefers-color-scheme: dark)">
@@ -50,6 +50,43 @@
 
   <h2>Preprints</h2>
   <ul class="pubs">
+    <li>
+      <span class="pub-title"><a href="https://arxiv.org/abs/2611.26609" target="_blank" rel="noopener noreferrer">Variants of Beam Search for DiskANN</a></span><br>
+      <span class="authors"><strong>Viraj Agrawal</strong>, Kirankumar Shiragur.</span><br>
+      <span class="venue">arXiv:2611.26609, November 2026.</span>
+      <span class="pub-links">[<a href="https://arxiv.org/pdf/2611.26609" target="_blank" rel="noopener noreferrer">pdf</a>]
+        [<a href="https://arxiv.org/bibtex/2611.26609" target="_blank" rel="noopener noreferrer">bibtex</a>]</span>
+      <details class="pub-abstract">
+        <summary>Summary</summary>
+        <p class="summary">
+          Graph-based data structures such as DiskANN, HNSW, and NSG constitute the state of the art for
+          large-scale approximate nearest-neighbor (ANN) search.
+          <a href="https://arxiv.org/abs/2310.19126" target="_blank" rel="noopener noreferrer">Indyk and Xu</a>
+          introduced the notion of &alpha;-reachable graphs, which include graphs built by DiskANN's
+          slow-preprocessing construction, and proved that greedy search achieves an approximation factor
+          of (&alpha;+1)/(&alpha;&minus;1). Independently,
+          <a href="https://arxiv.org/abs/2505.15636" target="_blank" rel="noopener noreferrer">Al-Jazzazi et al.</a>
+          proposed adaptive beam search (ABS) with a relaxation parameter &gamma; &gt; 0, showing a
+          2/&gamma; approximation on navigable graphs (&alpha; &asymp; 1), where greedy search admits no
+          guarantees. In this work, we unify and generalize these results by proving that ABS with
+          parameter &gamma; on &alpha;-reachable graphs achieves an approximation of
+          (&alpha;+1)/(&alpha;(&gamma;+1)&minus;1) for any metric. Moreover, on sorted &alpha;-reachable
+          graphs (introduced by
+          <a href="https://openreview.net/forum?id=JnXbUKtLzz" target="_blank" rel="noopener noreferrer">Gollapudi et al.</a>)
+          under the &ell;<sub>2</sub> metric, we obtain the tighter bound
+          max(&alpha;/(&alpha;(&gamma;+1)&minus;1), (&alpha;&sup2;+1)/(&alpha;&sup2;(&gamma;+1)&minus;1)).
+          Beyond these theoretical results, we design a beam predictor using features inspired by
+          fine-grained analysis of ABS, trained via a constrained objective that minimizes mean distance
+          computations subject to a target recall. On three 100-million-point benchmarks, using graphs
+          built by DiskANN's practical construction, beam predictor lowers mean query latency on
+          SSD-resident indices at matched recall by up to 29.6% relative to classical beam search (CBS).
+          Relative to ABS, it is faster in 11 of 15 settings, by up to 6.5%, and at most 1.4% slower in
+          the other 4; at 95% recall, its advantage over ABS grows from 0.8&ndash;4.2% for 100 neighbors
+          to 4.6&ndash;5.6% for 500 neighbors. In memory, it needs 1.3&ndash;23.7% fewer distance
+          computations than CBS and 0.0&ndash;3.9% fewer than ABS.
+        </p>
+      </details>
+    </li>
     <li>
       <span class="pub-title"><a href="https://arxiv.org/abs/2610.14196" target="_blank" rel="noopener noreferrer">Simple Linear Corrections for Compression in Late Interaction</a></span><br>
       <span class="authors">Mihir Agarwal, Sabyasachi Basu, <strong>Viraj Agrawal</strong>.</span><br>
